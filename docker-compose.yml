@@ -1,0 +1,62 @@
+version: "3.4"
+services:
+  doh-server:
+    image: dnsoverhttps/doh-server:latest
+    volumes:
+      - doh-server:/etc/doh-server
+    depends_on:
+      - bind9
+    depoly:
+      restart_policy:
+        condition: always
+    networks:
+      - dns
+      - nginx
+  doh-client:
+    image: dnsoverhttps/doh-client:latest
+    volumes:
+      - doh-client:/etc/doh-client
+    depoly:
+      restart_policy:
+        condition: always
+    networks:
+      - dns
+  bind9:
+    image: resystit/bind9:latest
+    volumes:
+      - bind9:/etc/bind/
+    depends_on:
+      - doh-client
+    depoly:
+      restart_policy:
+        condition: always
+    networks:
+      - dns
+      - nginx
+  nginx:
+    image: nginx:1.15.9-alpine
+    volumes:
+      - nginx:/etc/nginx/
+    depends_on:
+      - doh-server
+    depoly:
+      restart_policy:
+        condition: always
+    networks:
+      - nginx
+    ports:
+      - 80:80
+      - 443:443
+      - 853:853
+
+
+networks:
+  dns:
+  nginx:
+
+volumes:
+  doh-server:
+  doh-client:
+  bind9:
+  nginx:
+  
