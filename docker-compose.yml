@@ -6,9 +6,7 @@ services:
       - doh-server:/etc/doh-server
     depends_on:
       - bind9
-    depoly:
-      restart_policy:
-        condition: always
+    restart: always
     networks:
       - dns
       - nginx
@@ -16,9 +14,7 @@ services:
     image: dnsoverhttps/doh-client:latest
     volumes:
       - doh-client:/etc/doh-client
-    depoly:
-      restart_policy:
-        condition: always
+    restart: always
     networks:
       - dns
   bind9:
@@ -27,9 +23,7 @@ services:
       - bind9:/etc/bind/
     depends_on:
       - doh-client
-    depoly:
-      restart_policy:
-        condition: always
+    restart: always
     networks:
       - dns
       - nginx
@@ -39,9 +33,7 @@ services:
       - nginx:/etc/nginx/
     depends_on:
       - doh-server
-    depoly:
-      restart_policy:
-        condition: always
+    restart: always
     networks:
       - nginx
     ports:
