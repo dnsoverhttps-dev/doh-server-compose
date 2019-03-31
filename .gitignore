@@ -1,2 +1,3 @@
-/nginx/conf.d/
+/nginx/conf.d/dnsoverhttps.conf
+/nginx/conf.d/dnsovertls.conf
 /dhparam/
