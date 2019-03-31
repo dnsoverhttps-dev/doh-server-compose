@@ -3,52 +3,50 @@ services:
   doh-server:
     image: dnsoverhttps/doh-server:1.0.0
     volumes:
-      - doh-server:/etc/doh-server
+      - ${pwd}/doh-server:/etc/doh-server
     depends_on:
       - bind9
     restart: always
     networks:
-      - dns
-      - nginx
+      dns:
+        ipv4_address: 10.40.0.10
   doh-client:
     image: dnsoverhttps/doh-client:1.0.0
     volumes:
-      - doh-client:/etc/doh-client
+      - ${pwd}/doh-client:/etc/doh-client
     restart: always
     networks:
-      - dns
+      dns:
+        ipv4_address: 10.40.0.20
   bind9:
     image: resystit/bind9:latest
     volumes:
-      - bind9:/etc/bind/
+      - ${pwd}/bind9:/etc/bind/
     depends_on:
       - doh-client
     restart: always
     networks:
-      - dns
-      - nginx
+      dns:
+        ipv4_address: 10.40.0.30
   nginx:
     image: nginx:1.15.9-alpine
     volumes:
-      - nginx:/etc/nginx/
+      - ${pwd}/nginx:/etc/nginx/
     depends_on:
       - doh-server
     restart: always
     networks:
-      - nginx
+      dns:
+        ipv4_address: 10.40.0.40
     ports:
       - 80:80
       - 443:443
       - 853:853
-
-
 networks:
   dns:
-  nginx:
-
-volumes:
-  doh-server:
-  doh-client:
-  bind9:
-  nginx:
+    driver: bridge
+    ipam:
+      config:
+        subnet: 10.40.0.0/16
+        gateway: 10.40.0.1
   
