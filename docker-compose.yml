@@ -31,8 +31,7 @@ services:
   nginx:
     image: nginx:1.15.9-alpine
     volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - nginx:/etc/nginx
+      - ./nginx:/etc/nginx:rw
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - ./dhparam:/etc/dhparam
       - ./webroot:/var/www/webroot
