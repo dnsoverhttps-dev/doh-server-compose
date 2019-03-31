@@ -29,7 +29,8 @@ services:
       dns:
         ipv4_address: 10.40.0.30
     ports:
-      - 52:52
+      - "53:53/udp"
+      - "53:53/tcp"
   nginx:
     image: nginx:1.15.9-alpine
     volumes:
@@ -44,9 +45,9 @@ services:
       dns:
         ipv4_address: 10.40.0.40
     ports:
-      - 80:80
-      - 443:443
-      - 853:853
+      - "80:80"
+      - "443:443"
+      - "853:853"
 networks:
   dns:
     driver: bridge
