@@ -3,7 +3,7 @@ services:
   doh-server:
     image: dnsoverhttps/doh-server:1.0.0
     volumes:
-      - ${pwd}/doh-server:/etc/doh-server
+      - ./doh-server:/etc/doh-server
     depends_on:
       - bind9
     restart: always
@@ -13,7 +13,7 @@ services:
   doh-client:
     image: dnsoverhttps/doh-client:1.0.0
     volumes:
-      - ${pwd}/doh-client:/etc/doh-client
+      - ./doh-client:/etc/doh-client
     restart: always
     networks:
       dns:
@@ -21,7 +21,7 @@ services:
   bind9:
     image: resystit/bind9:latest
     volumes:
-      - ${pwd}/bind9:/etc/bind/
+      - ./bind9:/etc/bind/
     depends_on:
       - doh-client
     restart: always
@@ -31,10 +31,10 @@ services:
   nginx:
     image: nginx:1.15.9-alpine
     volumes:
-      - ${pwd}/nginx:/etc/nginx/
+      - ./nginx:/etc/nginx/
       - /etc/letsencrypt:/etc/letsencrypt:ro
-      - ${pwd}/dhparam:/etc/dhparam
-      - ${pwd}/webroot:/var/www/webroot
+      - ./dhparam:/etc/dhparam
+      - ./webroot:/var/www/webroot
     depends_on:
       - doh-server
     restart: always
@@ -51,4 +51,3 @@ networks:
     ipam:
       config:
         - subnet: 10.40.0.0/16
-  
