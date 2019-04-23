@@ -1,3 +1,5 @@
-/nginx/conf.d/dnsoverhttps.conf
-/nginx/conf.d/dnsovertls.conf
-/dhparam/
+nginx/conf.d/dnsoverhttps.conf
+nginx/conf.d/dnsovertls.conf
+dhparam/
+bind9/records/*
+!bind9/records/readme.md

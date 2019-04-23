@@ -21,7 +21,9 @@ services:
   bind9:
     image: resystit/bind9:latest
     volumes:
-      - ./bind9:/etc/bind:rw
+      - ./bind9/named.conf:/etc/bind/named.conf
+      - ./bind9/records:/etc/bind/records
+      - bind9:/etc/bind
     depends_on:
       - doh-client
     restart: always
@@ -48,6 +50,8 @@ services:
       - "80:80"
       - "443:443"
       - "853:853"
+volumes:
+  bind9:
 networks:
   dns:
     driver: bridge
