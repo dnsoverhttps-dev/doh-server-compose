@@ -3,3 +3,4 @@ nginx/conf.d/dnsovertls.conf
 dhparam/
 bind9/records/*
 !bind9/records/readme.md
+bind9/named.conf.local
