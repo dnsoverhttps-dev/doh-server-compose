@@ -13,13 +13,11 @@ services:
   bind9:
     image: resystit/bind9:latest
     volumes:
-      - ./bind9/named.doh-client.conf:/etc/bind/named.conf
+      - ./bind9/named.conf:/etc/bind/named.conf
       - ./bind9/zones:/etc/bind/zones
       - ./bind9/named.conf.local:/etc/bind/named.conf.local
       - ./bind9/named.conf.options:/etc/bind/named.conf.options
       - bind9:/etc/bind
-    depends_on:
-      - doh-client
     restart: always
     networks:
       dns:
