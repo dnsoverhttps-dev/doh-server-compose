@@ -26,7 +26,7 @@ bind9 gets DNS information without going through DoH-Client and gets data quickl
 ### Type-2 with DoH-Client
 
 ```bash
-docker-compose up -d -f docker-compose-with-client.yml
+docker-compose up -f docker-compose-with-client.yml -d
 ```
 
 bind9 gets the DNS information through the DoH-Client and receives accurate and uncontaminated information. However, it is a bit slow to receive data because it goes through DoH-Client.
@@ -34,7 +34,7 @@ bind9 gets the DNS information through the DoH-Client and receives accurate and 
 ### Type-3 Nginx ReverseProxy Server is not included.
 
 ```bash
-docker-compose up -d -f docker-compose-without-nginx.yml
+docker-compose up -f docker-compose-without-nginx.yml -d
 ```
 
 In the Nginx configuration file, nginx.conf lines 78 ~ 83 and conf.stream.d/dnsovertls.conf and conf.d/dnsoverhttps.conf must be applied to the existing Nginx.

@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   doh-server:
-    image: dnsoverhttps/doh-server:1.0.0
+    image: dnsoverhttpsdev/doh-server:1.0.0
     volumes:
       - ./doh-server:/etc/doh-server
     depends_on:

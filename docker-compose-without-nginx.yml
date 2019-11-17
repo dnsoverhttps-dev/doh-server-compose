@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   doh-server:
-    image: dnsoverhttps/doh-server:1.0.0
+    image: dnsoverhttpsdev/doh-server:1.0.0
     volumes:
       - ./doh-server:/etc/doh-server
     depends_on:
@@ -10,14 +10,6 @@ services:
     networks:
       dns:
         ipv4_address: 10.40.0.10
-  doh-client:
-    image: dnsoverhttps/doh-client:1.0.0
-    volumes:
-      - ./doh-client:/etc/doh-client
-    restart: always
-    networks:
-      dns:
-        ipv4_address: 10.40.0.20
   bind9:
     image: resystit/bind9:latest
     volumes:
