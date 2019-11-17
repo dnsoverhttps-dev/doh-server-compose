@@ -1,0 +1,45 @@
+version: "3.4"
+services:
+  doh-server:
+    image: dnsoverhttps/doh-server:1.0.0
+    volumes:
+      - ./doh-server:/etc/doh-server
+    depends_on:
+      - bind9
+    restart: always
+    networks:
+      dns:
+        ipv4_address: 10.40.0.10
+  doh-client:
+    image: dnsoverhttps/doh-client:1.0.0
+    volumes:
+      - ./doh-client:/etc/doh-client
+    restart: always
+    networks:
+      dns:
+        ipv4_address: 10.40.0.20
+  bind9:
+    image: resystit/bind9:latest
+    volumes:
+      - ./bind9/named.doh-client.conf:/etc/bind/named.conf
+      - ./bind9/zones:/etc/bind/zones
+      - ./bind9/named.conf.local:/etc/bind/named.conf.local
+      - ./bind9/named.conf.options:/etc/bind/named.conf.options
+      - bind9:/etc/bind
+    depends_on:
+      - doh-client
+    restart: always
+    networks:
+      dns:
+        ipv4_address: 10.40.0.30
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+volumes:
+  bind9:
+networks:
+  dns:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.40.0.0/16

@@ -1,5 +1,7 @@
 # doh-server-compose
 
+[English](https://github.com/dnsoverhttps-dev/doh-server-compose/blob/master/README.md)  [Korean](https://github.com/dnsoverhttps-dev/doh-server-compose/blob/master/README.ko.md)
+
 ## 필요 프로그램
 
  - docker
@@ -29,6 +31,16 @@ docker-compose up -d -f docker-compose-with-client.yml
 
 bind9는 DoH-Client를 거치고 DNS 정보를 받아오며, 정확하고 오염되지 않은 정보를 받아옵니다. 하지만 DoH-Client를 거치므로 데이터를 받아오는 데 조금 느립니다.
 
+### Type-3 Nginx ReverseProxy Server가 비포함된 형태
+
+```bash
+docker-compose up -d -f docker-compose-without-nginx.yml
+```
+
+Nginx가 이미 설정되어 있는 환경에서 사용하세요. Nginx 설정파일 중 nginx.conf 78~83 라인 및 conf.stream.d/dnsovertls.conf, conf.d/dnsoverhttps.conf 파일을 기존의 Nginx에 적용해야 합니다.
+
+또 기존의 Nginx 서버를 dns network에 연결한 뒤, ip를 10.40.0.40 로 설정해야 합니다.
+
 ## 설정 방법
 
 ### 1. 다음과 같은 파일을 설정하여야 합니다.
@@ -40,7 +52,7 @@ bind9는 DoH-Client를 거치고 DNS 정보를 받아오며, 정확하고 오염
 
  - /bind9/named.conf.local
 
-위의 파일은 named.conf.local.inc 파일을 복사한 뒤,  bind9의 zone 설정을 할 수 있습니다. 필요한 경우 설정하시기 바랍니다. zone 파일은 Docker container 안에서 `/etc/bind/zones/` 를 가집니다.
+위의 파일은 named.conf.local.inc 파일을 복사한 뒤, bind9의 zone 설정을 할 수 있습니다. 필요한 경우 설정하시기 바랍니다. zone 파일은 Docker container 안에서 `/etc/bind/zones/` 를 가집니다.
 
 - /bind9/zones/
 
